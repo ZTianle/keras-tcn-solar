@@ -3,9 +3,9 @@ from tcn import compiled_tcn
 from utils import data_generator
 from matplotlib import pyplot
 import matplotlib.pyplot as plt
-x, y = data_generator(seq_length=350)
-x_train, y_train = x[:int(len(y)*0.8),:,:] , y[:int(len(y)*0.8),:]
-x_test, y_test = x[int(len(y)*0.8):,:,:] , y[int(len(y)*0.8):,:]
+x, y = data_generator(seq_length=300)
+x_train, y_train = x[:int(len(y)*0.9),:,:] , y[:int(len(y)*0.9),:]
+x_test, y_test = x[int(len(y)*0.9):,:,:] , y[int(len(y)*0.9):,:]
 
 
 
@@ -21,14 +21,14 @@ def run_task():
     model = compiled_tcn(return_sequences=False,
                          num_feat=x_train.shape[2],
                          num_classes=0,
-                         nb_filters=24,
+                         nb_filters=36,
                          kernel_size=8,
                          dilations=[2 ** i for i in range(9)],
                          nb_stacks=1,
                          max_len=x_train.shape[1],
                          use_skip_connections=True,
                          regression=True,
-                         dropout_rate=0.05)
+                         dropout_rate=0)
 
     print(f'x_train.shape = {x_train.shape}')
     print(f'y_train.shape = {y_train.shape}')
@@ -39,8 +39,8 @@ def run_task():
     # http://chappers.github.io/web%20micro%20log/2017/01/26/quick-models-in-keras/
     model.summary()
 
-    history = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=5,
-              callbacks=[psv], batch_size=256)
+    history = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=100,
+              callbacks=[psv], batch_size=64)
 
     y_pred = model.predict(x_test)
 
@@ -59,7 +59,7 @@ def run_task():
     plt.xlabel('times')
     plt.ylabel('solar')
     plt.show()
-    test_mse_score, test_mae_score = model.evaluate(x_test, y_test, verbose=VERBOSE)
+    test_mse_score, test_mae_score = model.evaluate(x_test, y_test, verbose=1)
     print('Test mse score:', test_mse_score)
     print('Test mae score:', test_mae_score)
 
