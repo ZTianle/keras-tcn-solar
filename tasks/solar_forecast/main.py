@@ -39,7 +39,7 @@ def run_task():
     # http://chappers.github.io/web%20micro%20log/2017/01/26/quick-models-in-keras/
     model.summary()
 
-    history = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=100,
+    history = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=50,
               callbacks=[psv], batch_size=128)
 
     y_pred = model.predict(x_test)
