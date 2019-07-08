@@ -3,9 +3,9 @@ from tcn import compiled_tcn
 from utils import data_generator
 from matplotlib import pyplot
 import matplotlib.pyplot as plt
-x, y = data_generator(seq_length=300)
-x_train, y_train = x[:int(len(y)*0.9),:,:] , y[:int(len(y)*0.9),:]
-x_test, y_test = x[int(len(y)*0.9):,:,:] , y[int(len(y)*0.9):,:]
+x, y = data_generator(seq_length=400)
+x_train, y_train = x[:int(len(y)*0.8),:,:] , y[:int(len(y)*0.8),:]
+x_test, y_test = x[int(len(y)*0.8):,:,:] , y[int(len(y)*0.8):,:]
 
 
 
@@ -40,7 +40,7 @@ def run_task():
     model.summary()
 
     history = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=100,
-              callbacks=[psv], batch_size=64)
+              callbacks=[psv], batch_size=128)
 
     y_pred = model.predict(x_test)
 
