@@ -65,7 +65,7 @@ def run_task():
     callback_lists = [tensorboard, checkpoint]
 
     history = model.fit(x_train, y_train, validation_split=0.1, shuffle=True, epochs=20,
-                        callbacks=[callback_lists], batch_size=128)
+                        callbacks= callback_lists, batch_size=128)
 
     y_pred = model.predict(x_test)
 
