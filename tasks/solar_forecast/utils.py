@@ -1,5 +1,7 @@
 import numpy as np
 import pandas as pd
+from sklearn import preprocessing
+
 
 
 
@@ -17,6 +19,9 @@ def data_generator(seq_length):
     x = np.zeros([len(y_all)-seq_length, seq_length, 7])
     y = np.zeros([len(y_all)-seq_length, 1])
     print(x_all.shape, len(y_all))
+
+    min_max_scaler = preprocessing.MinMaxScaler()
+    x_all = min_max_scaler.fit_transform(x_all)
 
     for i in range(len(y_all)-seq_length):
         x[i, :, :] = x_all[i:i+seq_length, :]

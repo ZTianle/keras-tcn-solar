@@ -3,10 +3,18 @@ from tcn import compiled_tcn
 from utils import data_generator
 from matplotlib import pyplot
 import matplotlib.pyplot as plt
+
 x, y = data_generator(seq_length=300)
+
+
+
 x_train, y_train = x[:int(len(y)*0.8),:,:] , y[:int(len(y)*0.8),:]
 x_test, y_test = x[int(len(y)*0.8):,:,:] , y[int(len(y)*0.8):,:]
 
+#min_max_scaler = preprocessing.MinMaxScaler()
+#X_train_minmax = min_max_scaler.fit_transform(X_train)
+#X_test = np.array([[ -3., -1., 4.]])
+#X_test_minmax = min_max_scaler.transform(X_test)
 
 
 class PrintSomeValues(keras.callbacks.Callback):
@@ -56,7 +64,7 @@ def run_task():
 
     callback_lists = [tensorboard, checkpoint]
 
-    history = model.fit(x_train, y_train, validation_split=0.1, shuffle=True, epochs=5,
+    history = model.fit(x_train, y_train, validation_split=0.1, shuffle=True, epochs=20,
                         callbacks=[callback_lists], batch_size=128)
 
     y_pred = model.predict(x_test)
