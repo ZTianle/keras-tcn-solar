@@ -3,7 +3,7 @@ from tcn import compiled_tcn
 from utils import data_generator
 from matplotlib import pyplot
 import matplotlib.pyplot as plt
-x, y = data_generator(seq_length=100)
+x, y = data_generator(seq_length=300)
 x_train, y_train = x[:int(len(y)*0.8),:,:] , y[:int(len(y)*0.8),:]
 x_test, y_test = x[int(len(y)*0.8):,:,:] , y[int(len(y)*0.8):,:]
 
@@ -41,8 +41,23 @@ def run_task():
 
     #history = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=50,
     #          callbacks=[psv], batch_size=128)
-    history = model.fit(x_train, y_train, validation_split=0.1, shuffle=False, epochs=20,
-                        callbacks=[keras.callbacks.TensorBoard(log_dir='./tmp/log')], batch_size=128)
+
+    # 创建一个权重文件保存文件夹logs
+    log_dir = "logs/"
+    # 记录所有训练过程，每隔一定步数记录最大值
+    tensorboard = keras.callbacks.TensorBoard(log_dir=log_dir)
+    checkpoint = keras.callbacks.ModelCheckpoint(log_dir + "best_weights.h5",
+                                 monitor="val_loss",
+                                 mode='min',
+                                 save_weights_only=False,
+                                 save_best_only=False,
+                                 verbose=1,
+                                 period=1)
+
+    callback_lists = [tensorboard, checkpoint]
+
+    history = model.fit(x_train, y_train, validation_split=0.1, shuffle=True, epochs=5,
+                        callbacks=[callback_lists], batch_size=128)
 
     y_pred = model.predict(x_test)
 
