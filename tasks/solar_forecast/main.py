@@ -1,11 +1,14 @@
 import keras
 from tcn import compiled_tcn
 from utils import data_generator
+from utils import data_generator_today
+
 from matplotlib import pyplot
 import matplotlib.pyplot as plt
 
 x, y = data_generator(seq_length=300)
 
+x, y = data_generator_today(seq_length=300)
 
 
 x_train, y_train = x[:int(len(y)*0.8),:,:] , y[:int(len(y)*0.8),:]
