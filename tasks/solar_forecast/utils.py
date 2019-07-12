@@ -48,7 +48,7 @@ def data_generator_today(seq_length):
     min_max_scaler = preprocessing.MinMaxScaler()
     x_all = min_max_scaler.fit_transform(x_all)
 
-    for i in range(len(y_all)-seq_length+1):
+    for i in range(len(y_all)-seq_length):
         x[i, :, :] = x_all[i:i+seq_length, :]
         y[i] = y_all[i+seq_length-1]
    # print(x[-1,:,:], y[-1])

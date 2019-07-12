@@ -6,7 +6,7 @@ from utils import data_generator_today
 from matplotlib import pyplot
 import matplotlib.pyplot as plt
 
-x, y = data_generator(seq_length=300)
+#x, y = data_generator(seq_length=300)
 
 x, y = data_generator_today(seq_length=300)
 
@@ -50,8 +50,7 @@ def run_task():
     # http://chappers.github.io/web%20micro%20log/2017/01/26/quick-models-in-keras/
     model.summary()
 
-    #history = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=50,
-    #          callbacks=[psv], batch_size=128)
+
 
     # 创建一个权重文件保存文件夹logs
     log_dir = "logs/"
@@ -67,7 +66,10 @@ def run_task():
 
     callback_lists = [tensorboard, checkpoint]
 
-    history = model.fit(x_train, y_train, validation_split=0.1, shuffle=True, epochs=20,
+    # history = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=50,
+    #          callbacks=[psv], batch_size=128)
+
+    history = model.fit(x_train, y_train, validation_split=0.1, shuffle=False, epochs=20,
                         callbacks= callback_lists, batch_size=128)
 
     y_pred = model.predict(x_test)
