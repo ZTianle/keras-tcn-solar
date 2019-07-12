@@ -209,7 +209,8 @@ def compiled_tcn(num_feat,  # type: int
         x = Activation('linear')(x)
         output_layer = x
         model = Model(input_layer, output_layer)
-        model.compile(get_opt(), loss='mean_squared_error', metrics=['mae'])
+#        model.compile(get_opt(), loss='mean_squared_error', metrics=['mae'])
+        model.compile(get_opt(), loss='mae', metrics=['mean_squared_error'])
     print(f'model.x = {input_layer.shape}')
     print(f'model.y = {output_layer.shape}')
     return model

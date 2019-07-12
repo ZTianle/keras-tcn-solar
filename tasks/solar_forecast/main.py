@@ -3,7 +3,7 @@ from tcn import compiled_tcn
 from utils import data_generator
 from matplotlib import pyplot
 import matplotlib.pyplot as plt
-x, y = data_generator(seq_length=400)
+x, y = data_generator(seq_length=100)
 x_train, y_train = x[:int(len(y)*0.8),:,:] , y[:int(len(y)*0.8),:]
 x_test, y_test = x[int(len(y)*0.8):,:,:] , y[int(len(y)*0.8):,:]
 
@@ -39,8 +39,10 @@ def run_task():
     # http://chappers.github.io/web%20micro%20log/2017/01/26/quick-models-in-keras/
     model.summary()
 
-    history = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=50,
-              callbacks=[psv], batch_size=128)
+    #history = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=50,
+    #          callbacks=[psv], batch_size=128)
+    history = model.fit(x_train, y_train, validation_split=0.1, shuffle=False, epochs=20,
+                        callbacks=[keras.callbacks.TensorBoard(log_dir='./tmp/log')], batch_size=128)
 
     y_pred = model.predict(x_test)
 
