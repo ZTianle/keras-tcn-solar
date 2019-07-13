@@ -89,7 +89,7 @@ def run_task():
     plt.xlabel('times')
     plt.ylabel('solar')
     plt.show()
-    test_mse_score, test_mae_score = model.evaluate(x_test, y_test, verbose=1)
+    test_mae_score, test_mse_score = model.evaluate(x_test, y_test, verbose=1)
     print('Test mse score:', test_mse_score)
     print('Test mae score:', test_mae_score)
 
