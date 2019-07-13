@@ -11,8 +11,8 @@ import matplotlib.pyplot as plt
 x, y = data_generator_today(seq_length=300)
 
 
-x_train, y_train = x[:int(len(y)*0.8),:,:] , y[:int(len(y)*0.8),:]
-x_test, y_test = x[int(len(y)*0.8):,:,:] , y[int(len(y)*0.8):,:]
+x_train, y_train = x[:int(len(y)*0.9),:,:] , y[:int(len(y)*0.9),:]
+x_test, y_test = x[int(len(y)*0.9):,:,:] , y[int(len(y)*0.9):,:]
 
 #min_max_scaler = preprocessing.MinMaxScaler()
 #X_train_minmax = min_max_scaler.fit_transform(X_train)
@@ -39,7 +39,7 @@ def run_task():
                          max_len=x_train.shape[1],
                          use_skip_connections=True,
                          regression=True,
-                         dropout_rate=0)
+                         dropout_rate=0.02)
 
     print(f'x_train.shape = {x_train.shape}')
     print(f'y_train.shape = {y_train.shape}')
@@ -69,8 +69,8 @@ def run_task():
     # history = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=50,
     #          callbacks=[psv], batch_size=128)
 
-    history = model.fit(x_train, y_train, validation_split=0.1, shuffle=False, epochs=20,
-                        callbacks= callback_lists, batch_size=128)
+    history = model.fit(x_train, y_train, validation_split=0.1, shuffle=True, epochs=20,
+                        callbacks= callback_lists, batch_size=32)
 
     y_pred = model.predict(x_test)
 
