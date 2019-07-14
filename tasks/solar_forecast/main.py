@@ -39,7 +39,7 @@ def run_task():
                          max_len=x_train.shape[1],
                          use_skip_connections=True,
                          regression=True,
-                         dropout_rate=0.02)
+                         dropout_rate=0.0)
 
     print(f'x_train.shape = {x_train.shape}')
     print(f'y_train.shape = {y_train.shape}')
@@ -69,10 +69,9 @@ def run_task():
     # history = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=50,
     #          callbacks=[psv], batch_size=128)
 
-    history = model.fit(x_train, y_train, validation_split=0.1, shuffle=True, epochs=20,
-                        callbacks= callback_lists, batch_size=32)
+    history = model.fit(x_train, y_train, validation_split=0.1, shuffle=True, epochs=100,
+                        callbacks=callback_lists, batch_size=32)
 
-    y_pred = model.predict(x_test)
 
     pyplot.plot(history.history['loss'])
     pyplot.plot(history.history['val_loss'])
@@ -82,7 +81,9 @@ def run_task():
     pyplot.legend(['train', 'validation'], loc='upper right')
     pyplot.show()
 
-    x_axix=range(len(y_test))
+    y_pred = model.predict(x_test)
+
+    x_axix = range(len(y_test))
     plt.plot(x_axix, y_test, color='green', label='test_ture')
     plt.plot(x_axix, y_pred, color='red', label='test_tcn')
     plt.legend()  # 显示图例
