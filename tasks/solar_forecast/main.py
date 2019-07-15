@@ -56,7 +56,7 @@ def run_task():
     log_dir = "logs/"
     # 记录所有训练过程，每隔一定步数记录最大值
     tensorboard = keras.callbacks.TensorBoard(log_dir=log_dir)
-    checkpoint = keras.callbacks.ModelCheckpoint(log_dir + "best_weights.h5",
+    checkpoint = keras.callbacks.ModelCheckpoint(log_dir + "best_model.h5",
                                  monitor="val_loss",
                                  mode='min',
                                  save_weights_only=False,
@@ -81,9 +81,15 @@ def run_task():
     pyplot.legend(['train', 'validation'], loc='upper right')
     pyplot.show()
 
+    # 保存模型
+    model.save('my_model.h5')
+
+    model = keras.models.load_model('logs/best_model.h5')
+
     y_pred = model.predict(x_test)
 
     x_axix = range(len(y_test))
+
     plt.plot(x_axix, y_test, color='green', label='test_ture')
     plt.plot(x_axix, y_pred, color='red', label='test_tcn')
     plt.legend()  # 显示图例
@@ -93,9 +99,6 @@ def run_task():
     test_mae_score, test_mse_score = model.evaluate(x_test, y_test, verbose=1)
     print('Test mse score:', test_mse_score)
     print('Test mae score:', test_mae_score)
-
-    # 保存模型
-    model.save('my_model.h5')
 
 
 if __name__ == '__main__':
