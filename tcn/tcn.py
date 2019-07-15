@@ -30,7 +30,7 @@ def residual_block(x, dilation_rate, nb_filters, kernel_size, padding, dropout_r
     for k in range(2):
         x = Conv1D(filters=nb_filters,
                    kernel_size=kernel_size,
-                   kernel_regularizer=keras.regularizers.l1_l2(l1=0.0001, l2=0),
+                   kernel_regularizer=keras.regularizers.l1_l2(l1=0, l2=0.000001),
                    dilation_rate=dilation_rate,
                    padding=padding)(x)
         x = keras.layers.normalization.BatchNormalization()(x)  # TODO should be WeightNorm here.
