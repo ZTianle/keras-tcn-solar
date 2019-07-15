@@ -60,9 +60,8 @@ def run_task():
                                  monitor="val_loss",
                                  mode='min',
                                  save_weights_only=False,
-                                 save_best_only=False,
+                                 save_best_only=True,
                                  verbose=1,
-                                 save_best_only='True',
                                  period=1)
 
     callback_lists = [tensorboard, checkpoint]
