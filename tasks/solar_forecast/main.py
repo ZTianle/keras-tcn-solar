@@ -62,6 +62,7 @@ def run_task():
                                  save_weights_only=False,
                                  save_best_only=False,
                                  verbose=1,
+                                 save_best_only='True',
                                  period=1)
 
     callback_lists = [tensorboard, checkpoint]
@@ -69,7 +70,7 @@ def run_task():
     # history = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=50,
     #          callbacks=[psv], batch_size=128)
 
-    history = model.fit(x_train, y_train, validation_split=0.1, shuffle=True, epochs=50,
+    history = model.fit(x_train, y_train, validation_split=0.1, shuffle=True, epochs=100,
                         callbacks=callback_lists, batch_size=32)
 
 
