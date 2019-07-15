@@ -69,7 +69,7 @@ def run_task():
     # history = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=50,
     #          callbacks=[psv], batch_size=128)
 
-    history = model.fit(x_train, y_train, validation_split=0.1, shuffle=True, epochs=100,
+    history = model.fit(x_train, y_train, validation_split=0.1, shuffle=True, epochs=50,
                         callbacks=callback_lists, batch_size=32)
 
 
