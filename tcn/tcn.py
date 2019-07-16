@@ -13,7 +13,6 @@ from keras.models import Input, Model
 def residual_block(x, dilation_rate, nb_filters, kernel_size, padding, dropout_rate=0):
     # type: (Layer, int, int, int, str, float) -> Tuple[Layer, Layer]
     """Defines the residual block for the WaveNet TCN
-
     Args:
         x: The previous layer in the model
         dilation_rate: The dilation power of 2 we are using for this residual block
@@ -21,7 +20,6 @@ def residual_block(x, dilation_rate, nb_filters, kernel_size, padding, dropout_r
         kernel_size: The size of the convolutional kernel
         padding: The padding used in the convolutional layers, 'same' or 'causal'.
         dropout_rate: Float between 0 and 1. Fraction of the input units to drop.
-
     Returns:
         A tuple where the first element is the residual model layer, and the second
         is the skip connection.
@@ -30,9 +28,10 @@ def residual_block(x, dilation_rate, nb_filters, kernel_size, padding, dropout_r
     for k in range(2):
         x = Conv1D(filters=nb_filters,
                    kernel_size=kernel_size,
+                   kernel_regularizer=keras.regularizers.l1_l2(l1=0, l2=0.00005),
                    dilation_rate=dilation_rate,
                    padding=padding)(x)
-        # x = BatchNormalization()(x)  # TODO should be WeightNorm here.
+        x = keras.layers.normalization.BatchNormalization()(x)  # TODO should be WeightNorm here.
         x = Activation('relu')(x)
         x = SpatialDropout1D(rate=dropout_rate)(x)
 
@@ -57,10 +56,8 @@ def process_dilations(dilations):
 
 class TCN:
     """Creates a TCN layer.
-
         Input shape:
             A tensor of shape (batch_size, timesteps, input_dim).
-
         Args:
             nb_filters: The number of filters to use in the convolutional layers.
             kernel_size: The size of the kernel to use in each convolutional layer.
@@ -71,7 +68,6 @@ class TCN:
             return_sequences: Boolean. Whether to return the last output in the output sequence, or the full sequence.
             dropout_rate: Float between 0 and 1. Fraction of the input units to drop.
             name: Name of the model. Useful when having multiple TCN.
-
         Returns:
             A TCN layer.
         """
@@ -145,7 +141,6 @@ def compiled_tcn(num_feat,  # type: int
     # type: (...) -> keras.Model
     """Creates a compiled TCN model for a given task (i.e. regression or classification).
     Classification uses a sparse categorical loss. Please input class ids and not one-hot encodings.
-
     Args:
         num_feat: The number of features of your input, i.e. the last dimension of: (batch_size, timesteps, input_dim).
         num_classes: The size of the final dense layer, how many classes we are predicting.

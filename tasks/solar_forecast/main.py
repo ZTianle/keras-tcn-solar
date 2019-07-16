@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 #x, y = data_generator(seq_length=300)
 
-x, y = data_generator_today(seq_length=300)
+x, y = data_generator_today(seq_length=200)
 
 
 x_train, y_train = x[:int(len(y)*0.9),:,:] , y[:int(len(y)*0.9),:]
@@ -34,7 +34,7 @@ def run_task():
                          num_classes=0,
                          nb_filters=36,
                          kernel_size=8,
-                         dilations=[2 ** i for i in range(9)],
+                         dilations=[2 ** i for i in range(5)],
                          nb_stacks=1,
                          max_len=x_train.shape[1],
                          use_skip_connections=True,
