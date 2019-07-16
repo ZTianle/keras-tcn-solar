@@ -60,7 +60,7 @@ def run_task():
                                  monitor="val_loss",
                                  mode='min',
                                  save_weights_only=False,
-                                 save_best_only=False,
+                                 save_best_only=True,
                                  verbose=1,
                                  period=1)
 
@@ -69,7 +69,7 @@ def run_task():
     # history = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=50,
     #          callbacks=[psv], batch_size=128)
 
-    history = model.fit(x_train, y_train, validation_split=0.1, shuffle=True, epochs=50,
+    history = model.fit(x_train, y_train, validation_split=0.1, shuffle=True, epochs=100,
                         callbacks=callback_lists, batch_size=32)
 
 
