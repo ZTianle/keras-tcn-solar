@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 #x, y = data_generator(seq_length=300)
 
-x, y = data_generator_today(seq_length=200)
+x, y = data_generator_today(seq_length=300)
 
 
 x_train, y_train = x[:int(len(y)*0.9),:,:] , y[:int(len(y)*0.9),:]
